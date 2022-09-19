@@ -26,8 +26,6 @@ const totalLength = contractAddresses[chainId]['NftMarketplace'].length;
 const nftMarketplaceAddress =
   contractAddresses[chainId]['NftMarketplace'][totalLength - 1];
 
-console.log(nftMarketplaceAddress);
-
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -39,18 +37,6 @@ const Contract = new ethers.Contract(
   NftMarketplaceABI,
   wallet
 );
-
-const str = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
-const firstSplit = str.split(' ');
-const secondSplit = firstSplit[0].split('/');
-const firstResult = firstSplit[1].replaceAll('.', ':');
-const secondResult = `${secondSplit[2]}-${secondSplit[1]}-${secondSplit[0]}`;
-const dateResult = `${secondResult} ${firstResult}`;
-const dateParsed = Date.parse(dateResult);
-
-console.log(dateResult);
-console.log(dateParsed + 25200);
-console.log(new Date(dateParsed + 25200000).toISOString());
 
 app.listen(PORT, () => {
   Contract.on(
