@@ -7,7 +7,7 @@ const NftMarketplace = require('./models/NftMarketplace');
 const CronJob = require('cron').CronJob;
 const fs = require('fs');
 const contractAddressesLocation = './constants/networkMapping.json';
-const chainId = 31337;
+const chainId = 4;
 
 require('dotenv').config();
 
