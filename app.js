@@ -11,7 +11,9 @@ const chainId = 4;
 
 require('dotenv').config();
 
-const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA);
+const provider = new ethers.providers.JsonRpcProvider(
+  process.env.RINKEBY_RPC_URL
+);
 
 let private = process.env.PRIVATE_KEY;
 
@@ -25,6 +27,8 @@ const totalLength = contractAddresses[chainId]['NftMarketplace'].length;
 
 const nftMarketplaceAddress =
   contractAddresses[chainId]['NftMarketplace'][totalLength - 1];
+
+console.log(nftMarketplaceAddress);
 
 const PORT = process.env.PORT || 3000;
 
