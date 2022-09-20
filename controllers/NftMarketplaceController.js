@@ -21,7 +21,7 @@ class NftMarketplaceController {
 
   static async insertItemListed(req, res, next) {
     try {
-      const data = await NftMarketplace.insertItemListed(res.body);
+      const data = await NftMarketplace.insertItemListed(req.body);
       res.status(200).json(data);
     } catch (e) {
       console.log(e);
@@ -30,7 +30,7 @@ class NftMarketplaceController {
 
   static async updateItemPrice(req, res, next) {
     try {
-      const data = await NftMarketplace.updateItemPrice(res.body);
+      const data = await NftMarketplace.updateItemPrice(req.body);
       res.status(200).json(data);
     } catch (e) {
       console.log(e);
@@ -39,7 +39,7 @@ class NftMarketplaceController {
 
   static async updateItemSeller(req, res, next) {
     try {
-      const data = await NftMarketplace.updateItemSeller(res.body);
+      const data = await NftMarketplace.updateItemSeller(req.body);
       res.status(200).json(data);
     } catch (e) {
       console.log(e);
@@ -48,7 +48,7 @@ class NftMarketplaceController {
 
   static async deleteActiveItem(req, res, next) {
     try {
-      const data = await NftMarketplace.deleteActiveItem(res.body);
+      const data = await NftMarketplace.deleteActiveItem(req.body);
       res.status(200).json(data);
     } catch (e) {
       console.log(e);
