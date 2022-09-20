@@ -4,7 +4,7 @@ class NftMarketplaceController {
   static async getActiveItems(req, res, next) {
     try {
       const data = await NftMarketplace.getActiveItems();
-      res.status(200).json(data.rows[0]);
+      res.status(200).json(data.rows);
     } catch (e) {
       console.log(e);
     }
@@ -13,7 +13,7 @@ class NftMarketplaceController {
   static async getListedItems(req, res, next) {
     try {
       const data = await NftMarketplace.getListedItems();
-      res.status(200).json(data.rows[0]);
+      res.status(200).json(data.rows);
     } catch (e) {
       console.log(e);
     }

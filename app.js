@@ -45,6 +45,8 @@ const Contract = new ethers.Contract(
   wallet
 );
 
+console.log(Contract.address);
+
 app.listen(PORT, () => {
   Contract.on(
     'ItemListed',
