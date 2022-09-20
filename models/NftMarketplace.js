@@ -1,7 +1,5 @@
 const pool = require('../database/db');
 
-const time = new Date(Date.now() + 25200000).toISOString();
-
 class NftMarketplace {
   static async getActiveItems() {
     try {
@@ -22,6 +20,7 @@ class NftMarketplace {
   }
 
   static async insertItemListed(data) {
+    const time = new Date(Date.now() + 25200000).toISOString();
     try {
       console.log('?????');
       let {
@@ -67,6 +66,7 @@ class NftMarketplace {
   }
 
   static async updateItemPrice(data) {
+    const time = new Date(Date.now() + 25200000).toISOString();
     try {
       let { nftAddress, tokenId, price, seller } = data;
 
@@ -87,6 +87,7 @@ class NftMarketplace {
   }
 
   static async updateItemSeller(data) {
+    const time = new Date(Date.now() + 25200000).toISOString();
     try {
       let {
         nftAddress,
@@ -124,6 +125,7 @@ class NftMarketplace {
   }
 
   static async deleteActiveItem(data) {
+    const time = new Date(Date.now() + 25200000).toISOString();
     try {
       let { nftAddress, tokenId, price, seller } = data;
       const deleteActiveItem = await pool.query(
