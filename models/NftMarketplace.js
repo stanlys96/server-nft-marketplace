@@ -41,9 +41,6 @@ class NftMarketplace {
   static async updateItemPrice(data) {
     try {
       let { nftAddress, tokenId, price, seller } = data;
-      const time = new Date().toLocaleString('id-ID', {
-        timeZone: 'Asia/Jakarta',
-      });
 
       const updatedActiveItem = await pool.query(
         'UPDATE active_items SET price = $3 WHERE nft_address = $1 AND token_id = $2 AND seller = $4 AND last_updated = $5 RETURNING *;',

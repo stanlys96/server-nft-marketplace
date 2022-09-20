@@ -5,6 +5,7 @@ const { ethers } = require('ethers');
 const NftMarketplaceABI = require('./constants/NftMarketplace.json');
 const NftMarketplace = require('./models/NftMarketplace');
 const CronJob = require('cron').CronJob;
+const router = require('./routes');
 const fs = require('fs');
 const contractAddressesLocation = './constants/networkMapping.json';
 const chainId = 4;
@@ -35,6 +36,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+app.use(router);
 
 const Contract = new ethers.Contract(
   nftMarketplaceAddress,
