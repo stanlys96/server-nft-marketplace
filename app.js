@@ -31,7 +31,7 @@ const nftMarketplaceAddress =
 
 console.log(nftMarketplaceAddress);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,53 +48,51 @@ const Contract = new ethers.Contract(
 console.log(Contract.address);
 
 app.listen(PORT, () => {
-  Contract.on(
-    'ItemListed',
-    async (seller, nftAddress, tokenId, price, action) => {
-      console.log('Item listed!');
-      price = parseFloat(ethers.utils.formatUnits(price, 'ether'));
-      tokenId = parseInt(tokenId.toString());
-      if (action === 'list_item') {
-        console.log('HERE!');
-        await NftMarketplace.insertItemListed({
-          seller,
-          nftAddress,
-          tokenId,
-          price,
-        });
-      } else {
-        console.log('HERE!!!!!');
-        await NftMarketplace.updateItemPrice({
-          seller,
-          nftAddress,
-          tokenId,
-          price,
-        });
-      }
-    }
-  );
-
-  Contract.on('ItemBought', async (buyer, nftAddress, tokenId, price) => {
-    console.log('Item bought!');
-    price = parseFloat(ethers.utils.parseEther(price));
-    tokenId = parseInt(tokenId.toString());
-    await NftMarketplace.updateItemSeller({
-      buyer,
-      nftAddress,
-      tokenId,
-      price,
-    });
-  });
-
-  Contract.on('ItemCanceled', async (seller, nftAddress, tokenId, price) => {
-    console.log('Item canceled!');
-    price = parseFloat(ethers.utils.parseEther(price));
-    tokenId = parseInt(tokenId.toString());
-    await NftMarketplace.deleteActiveItem({
-      nftAddress,
-      tokenId,
-      price,
-      seller,
-    });
-  });
+  // Contract.on(
+  //   'ItemListed',
+  //   async (seller, nftAddress, tokenId, price, action) => {
+  //     console.log('Item listed!');
+  //     price = parseFloat(ethers.utils.formatUnits(price, 'ether'));
+  //     tokenId = parseInt(tokenId.toString());
+  //     if (action === 'list_item') {
+  //       console.log('HERE!');
+  //       await NftMarketplace.insertItemListed({
+  //         seller,
+  //         nftAddress,
+  //         tokenId,
+  //         price,
+  //       });
+  //     } else {
+  //       console.log('HERE!!!!!');
+  //       await NftMarketplace.updateItemPrice({
+  //         seller,
+  //         nftAddress,
+  //         tokenId,
+  //         price,
+  //       });
+  //     }
+  //   }
+  // );
+  // Contract.on('ItemBought', async (buyer, nftAddress, tokenId, price) => {
+  //   console.log('Item bought!');
+  //   price = parseFloat(ethers.utils.parseEther(price));
+  //   tokenId = parseInt(tokenId.toString());
+  //   await NftMarketplace.updateItemSeller({
+  //     buyer,
+  //     nftAddress,
+  //     tokenId,
+  //     price,
+  //   });
+  // });
+  // Contract.on('ItemCanceled', async (seller, nftAddress, tokenId, price) => {
+  //   console.log('Item canceled!');
+  //   price = parseFloat(ethers.utils.parseEther(price));
+  //   tokenId = parseInt(tokenId.toString());
+  //   await NftMarketplace.deleteActiveItem({
+  //     nftAddress,
+  //     tokenId,
+  //     price,
+  //     seller,
+  //   });
+  // });
 });
