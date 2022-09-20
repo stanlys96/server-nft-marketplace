@@ -23,14 +23,42 @@ class NftMarketplace {
 
   static async insertItemListed(data) {
     try {
-      let { nftAddress, tokenId, price, seller } = data;
+      console.log('?????');
+      let {
+        nftAddress,
+        tokenId,
+        price,
+        seller,
+        imageUrl,
+        tokenName,
+        tokenDescription,
+      } = data;
       const newDataActiveItems = await pool.query(
-        'INSERT INTO active_items (nft_address, token_id, price, seller, last_updated) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
-        [nftAddress, tokenId, price, seller, time]
+        'INSERT INTO active_items (nft_address, token_id, price, seller, last_updated, image_url, token_name, token_description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;',
+        [
+          nftAddress,
+          tokenId,
+          price,
+          seller,
+          time,
+          imageUrl,
+          tokenName,
+          tokenDescription,
+        ]
       );
       const newDataItemsListed = await pool.query(
-        'INSERT INTO items_listed (nft_address, token_id, price, seller, action, last_updated) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-        [nftAddress, tokenId, price, seller, 'item_listed', time]
+        'INSERT INTO items_listed (nft_address, token_id, price, seller, action, last_updated, image_url, token_name, token_description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;',
+        [
+          nftAddress,
+          tokenId,
+          price,
+          seller,
+          'item_listed',
+          time,
+          imageUrl,
+          tokenName,
+          tokenDescription,
+        ]
       );
       return { ...newDataActiveItems.rows[0], message: 'Success!' };
     } catch (e) {
@@ -60,7 +88,15 @@ class NftMarketplace {
 
   static async updateItemSeller(data) {
     try {
-      let { nftAddress, tokenId, price, buyer } = data;
+      let {
+        nftAddress,
+        tokenId,
+        price,
+        buyer,
+        imageUrl,
+        tokenName,
+        tokenDescription,
+      } = data;
 
       const updatedActiveItem = await pool.query(
         'UPDATE active_items SET seller = $4 WHERE nft_address = $1 AND token_id = $2 AND price = $3 RETURNING *;',
@@ -68,8 +104,17 @@ class NftMarketplace {
       );
 
       const insertItemBought = await pool.query(
-        'INSERT INTO items_bought (nft_address, token_id, price, buyer, time) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
-        [nftAddress, tokenId, price, buyer, time]
+        'INSERT INTO items_bought (nft_address, token_id, price, buyer, time, image_url, token_name, token_description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;',
+        [
+          nftAddress,
+          tokenId,
+          price,
+          buyer,
+          time,
+          imageUrl,
+          tokenName,
+          tokenDescription,
+        ]
       );
 
       return { ...updatedActiveItem.rows[0], message: 'Success!' };

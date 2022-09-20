@@ -55,6 +55,7 @@ app.listen(PORT, () => {
       price = parseFloat(ethers.utils.formatUnits(price, 'ether'));
       tokenId = parseInt(tokenId.toString());
       if (action === 'list_item') {
+        console.log('HERE!');
         await NftMarketplace.insertItemListed({
           seller,
           nftAddress,
@@ -62,6 +63,7 @@ app.listen(PORT, () => {
           price,
         });
       } else {
+        console.log('HERE!!!!!');
         await NftMarketplace.updateItemPrice({
           seller,
           nftAddress,
