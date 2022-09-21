@@ -22,7 +22,7 @@ class NftMarketplace {
   static async getNftAddressAndTokenId(data) {
     try {
       let { nftAddress, tokenId } = data;
-      const result = await pool.query('SELECT & FROM active_items WHERE nft_address = $1 AND token_id = $2', [nftAddress, tokenId]);
+      const result = await pool.query('SELECT * FROM active_items WHERE nft_address = $1 AND token_id = $2', [nftAddress, tokenId]);
       return result;
     } catch (e) {
       console.log(e);
