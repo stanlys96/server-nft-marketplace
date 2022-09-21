@@ -22,7 +22,6 @@ class NftMarketplace {
   static async getNftAddressAndTokenId(data) {
     try {
       let { nftAddress, tokenId } = data;
-      tokenId = parseInt(tokenId);
       const result = await pool.query('SELECT * FROM active_items WHERE nft_address = $1 AND token_id = $2', [nftAddress, tokenId]);
       return result;
     } catch (e) {
@@ -33,7 +32,6 @@ class NftMarketplace {
   static async insertItemListed(data) {
     const time = new Date(Date.now() + 25200000).toISOString();
     try {
-      console.log('?????');
       let {
         nftAddress,
         tokenId,
@@ -43,10 +41,6 @@ class NftMarketplace {
         tokenName,
         tokenDescription,
       } = data;
-      console.log(data);
-      console.log(imageUrl, ' <<< imageUrl');
-      console.log(tokenName, ' <<< tokenName');
-      console.log(tokenDescription, ' <<< tokenDescription');
       const newDataActiveItems = await pool.query(
         'INSERT INTO active_items (nft_address, token_id, price, seller, last_updated, image_url, token_name, token_description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;',
         [
