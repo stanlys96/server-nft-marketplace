@@ -3,7 +3,9 @@ const pool = require('../database/db');
 class NftMarketplace {
   static async getActiveItems() {
     try {
-      const data = await pool.query('SELECT * FROM active_items;');
+      const data = await pool.query(
+        'SELECT * FROM active_items ORDER BY id ASC;'
+      );
       return data;
     } catch (e) {
       console.log(e);
@@ -12,7 +14,9 @@ class NftMarketplace {
 
   static async getListedItems() {
     try {
-      const data = await pool.query('SELECT * FROM items_listed;');
+      const data = await pool.query(
+        'SELECT * FROM items_listed ORDER BY id ASC;'
+      );
       return data;
     } catch (e) {
       console.log(e);
@@ -22,7 +26,10 @@ class NftMarketplace {
   static async getNftAddressAndTokenId(data) {
     try {
       let { nftAddress, tokenId } = data;
-      const result = await pool.query('SELECT * FROM active_items WHERE nft_address = $1 AND token_id = $2', [nftAddress, tokenId]);
+      const result = await pool.query(
+        'SELECT * FROM active_items WHERE nft_address = $1 AND token_id = $2',
+        [nftAddress, tokenId]
+      );
       return result;
     } catch (e) {
       console.log(e);
@@ -78,17 +85,18 @@ class NftMarketplace {
     const time = new Date(Date.now() + 25200000).toISOString();
     try {
       let { nftAddress, tokenId, price, seller } = data;
-
+      console.log(data, ' <<<<< data');
+      price = parseFloat(price);
       const updatedActiveItem = await pool.query(
-        'UPDATE active_items SET price = $3 WHERE nft_address = $1 AND token_id = $2 AND seller = $4 AND last_updated = $5 RETURNING *;',
-        [nftAddress, tokenId, price, seller, time]
+        'UPDATE active_items SET price = $3 WHERE nft_address = $1 AND token_id = $2 AND seller = $4 RETURNING *;',
+        [nftAddress, tokenId, price, seller]
       );
 
       const newDataItemsListed = await pool.query(
         'INSERT INTO items_listed (nft_address, token_id, price, seller, action, last_updated) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
         [nftAddress, tokenId, price, seller, 'price_updated', time]
       );
-
+      console.log(updatedActiveItem);
       return { ...updatedActiveItem.rows[0], message: 'Success!' };
     } catch (e) {
       console.log(e);
