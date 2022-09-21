@@ -22,7 +22,7 @@ class NftMarketplaceController {
   static async checkNftAddressAndTokenIdExist(req, res, next) {
     try {
       const data = await NftMarketplace.getNftAddressAndTokenId(req.body);
-      res.status(200).json(data);
+      res.status(200).json(data.rows);
     } catch (e) {
       console.log(e);
     }
