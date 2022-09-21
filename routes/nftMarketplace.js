@@ -5,6 +5,7 @@ const NftMarketplaceController = require('../controllers/NftMarketplaceControlle
 router.get('/getActiveItems', NftMarketplaceController.getActiveItems);
 router.get('/getListedItems', NftMarketplaceController.getListedItems);
 router.post('/insertItemListed', NftMarketplaceController.insertItemListed);
+router.post('/checkNftAddressTokenId', NftMarketplaceController.checkNftAddressAndTokenIdExist);
 router.put('/updateItemPrice', NftMarketplaceController.updateItemPrice);
 router.put('/updateItemSeller', NftMarketplaceController.updateItemSeller);
 router.delete('/deleteActiveItem', NftMarketplaceController.deleteActiveItem);
