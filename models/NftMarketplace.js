@@ -114,11 +114,12 @@ class NftMarketplace {
         imageUrl,
         tokenName,
         tokenDescription,
+        seller,
       } = data;
 
-      const updatedActiveItem = await pool.query(
-        'UPDATE active_items SET seller = $4 WHERE nft_address = $1 AND token_id = $2 AND price = $3 RETURNING *;',
-        [nftAddress, tokenId, price, buyer]
+      const deleteActiveItem = await pool.query(
+        'DELETE FROM active_items WHERE nft_address = $1 AND token_id = $2 AND price = $3 AND seller = $4;',
+        [nftAddress, tokenId, price, seller]
       );
 
       const insertItemBought = await pool.query(
@@ -135,7 +136,7 @@ class NftMarketplace {
         ]
       );
 
-      return { ...updatedActiveItem.rows[0], message: 'Success!' };
+      return { ...deleteActiveItem.rows[0], message: 'Success!' };
     } catch (e) {
       console.log(e);
     }
